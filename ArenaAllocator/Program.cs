@@ -1,7 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
-
-namespace ArenaAllocator;
+﻿namespace ArenaAllocator;
 
 struct TestStruct
 {

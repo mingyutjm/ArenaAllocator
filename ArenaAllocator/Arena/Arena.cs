@@ -1,6 +1,4 @@
-﻿using System.Buffers;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 
 namespace ArenaAllocator
 {
@@ -18,9 +16,7 @@ namespace ArenaAllocator
 
         public static Arena Create(uint size)
         {
-            uint size_roundup_granularity = OSCore.Megabytes(64);
-            size += size_roundup_granularity - 1;
-            size -= size % size_roundup_granularity;
+            size = Misc.SnapSize(size, OSCore.Megabytes(64));
             IntPtr block = ArenaImpl_Reserve(size);
             uint initialCommitSize = ARENA_COMMIT_GRANULARITY;
             ArenaImpl_Commit(block, initialCommitSize);
@@ -34,7 +30,6 @@ namespace ArenaAllocator
             return arena;
         }
 
-        // 销毁
         public void Dispose()
         {
             IntPtr ptr = new IntPtr(1); //Marshal.AllocHGlobal(Marshal.SizeOf<Arena>());
@@ -42,7 +37,6 @@ namespace ArenaAllocator
             ArenaImpl_Release(ptr, _size);
         }
 
-        // 清理
         public void Clear()
         {
             uint initialCommitSize = ARENA_COMMIT_GRANULARITY;
@@ -92,12 +86,6 @@ namespace ArenaAllocator
 
         public void Pop<T>() where T : struct
         {
-            // U64 min_pos = sizeof(Arena);
-            // U64 size_to_pop = Min(size, arena->pos);
-            // U64 new_pos = arena->pos - size_to_pop;
-            // new_pos = Max(new_pos, min_pos);
-            // ArenaPopTo(arena, new_pos);
-            //
         }
 
         private static IntPtr ArenaImpl_Reserve(uint size)

@@ -4,7 +4,7 @@
     public class TypeId : Singleton<TypeId>
     {
         private int _currentMaxId = 1;
-        private Dictionary<System.Type, int> _typeIds = new Dictionary<Type, int>();
+        private Dictionary<Type, int> _typeIds = new Dictionary<Type, int>();
 
         public int GetId<T>()
         {

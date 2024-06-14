@@ -3,7 +3,6 @@
 
     public static partial class OSCore
     {
-        // 定义常量
         private const uint MEM_RESERVE = 0x00002000;
         private const uint MEM_RELEASE = 0x8000;
         private const uint MEM_COMMIT = 0x00001000;
